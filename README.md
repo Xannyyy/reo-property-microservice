@@ -1,64 +1,28 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400"></a></p>
+# Starting the project 
 
-<p align="center">
-<a href="https://travis-ci.org/laravel/framework"><img src="https://travis-ci.org/laravel/framework.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
-</p>
+Starting the project is no more complicated than running the `php artisan config:cache` then after this the pre made seeders let you test it with ease so make sure to run migrate as such `php artisan migrate --seed`. There are two properties you can test with the one with id `1` and `2`. But also you can run the unit tests I have written with `php artisan test`. It includes a wide variety of ways you can match profiles.
 
-## About Laravel
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+### Project Structure
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+The project does not follow the standard MVC pattern, and it is also an API. We have the following structure. NOTE: Only non default laravel structure is explained.
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+- Domains:
+  * The domains folder contains all our domains or to put it simple where all our logic code that has no integration outside resides. These are comprised of classes that just do logic and let's us unit test really easily without having to worry about heavy mocking. 
+- Repositories:
+  * The repositories folder contains all our repositories which connect to a outer source of data. In our case we have a mysql database. Even though Eloquent is a active record ORM we still use repository pattern to keep things centralized and easy to work with. It is not fully a "repository pattern" due to the model still being able to change itself outside of the repository but it gives us a good abstraction over the data layer.
+- Services:
+  * The services folder contains all our services which the sole purpose is for them to connect our other parts of the application. In our case it connects the repository and domains and creates some kind of result. With the use of services we keep our controllers clean and provide ourseves a easy way of writing integration tests.
+- DTO:
+  * The DTO folder contains all objects that serve as a way of type hinting functions. They are pure objects with just data in them and static methods to create themselves. We use static methods because a single object can be created from more than one source and it gives good naming availability.
 
-## Learning Laravel
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
+### Some good practices
 
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains over 2000 video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+- If a class is supposed to have an interface always place them inside one folder.
+- Try to format as much as possible with phps coding standard(I use phpstorm so it requires no pre configuration)
+- Function and variable naming should be as concise and meaningful as possible
+- Functions should remain relatively small or else extract into private methods with concise names
+- Avoid leaving comments since at that point a function will have more than one source of truth
+- Please improve this list if you see the need too!
 
-## Laravel Sponsors
-
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the Laravel [Patreon page](https://patreon.com/taylorotwell).
-
-### Premium Partners
-
-- **[Vehikl](https://vehikl.com/)**
-- **[Tighten Co.](https://tighten.co)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Cubet Techno Labs](https://cubettech.com)**
-- **[Cyber-Duck](https://cyber-duck.co.uk)**
-- **[Many](https://www.many.co.uk)**
-- **[Webdock, Fast VPS Hosting](https://www.webdock.io/en)**
-- **[DevSquad](https://devsquad.com)**
-- **[Curotec](https://www.curotec.com/services/technologies/laravel/)**
-- **[OP.GG](https://op.gg)**
-- **[WebReinvent](https://webreinvent.com/?utm_source=laravel&utm_medium=github&utm_campaign=patreon-sponsors)**
-- **[Lendio](https://lendio.com)**
-
-## Contributing
-
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
-
-## Code of Conduct
-
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
-
-## Security Vulnerabilities
-
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
-
-## License
-
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
